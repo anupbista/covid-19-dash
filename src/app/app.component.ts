@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'covid19dash';
+  private isDarkTheme: boolean = false;
+
+  @HostBinding('class')
+  get themeMode(){
+    return this.isDarkTheme ? 'dark-theme' : 'light-theme'
+  }
+
+  changeThemeMode(event){
+    this.isDarkTheme = event.checked;
+  }
 }
