@@ -1,4 +1,4 @@
 export const environment = {
-  apiUrl: 'http://api.coronastatistics.live/',
+  apiUrl: 'https://api.coronastatistics.live/',
   production: true
 };
