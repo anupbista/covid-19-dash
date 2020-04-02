@@ -13,19 +13,22 @@ import { HttpService } from './services/http.service';
 import { ApiService } from './services/api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { WorldMapComponent } from './components/dashboard/world-map/world-map.component';
+import { WorldDatatableComponent } from './components/dashboard/world-datatable/world-datatable.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     CaseCountComponent,
-    WorldMapComponent
+    WorldMapComponent,
+    WorldDatatableComponent
   ],
   imports: [
     RouterModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    SharedModule,
     MaterialModule,
     BrowserAnimationsModule
   ],

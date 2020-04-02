@@ -9,6 +9,7 @@ import { ApiService } from '../../../services/api.service';
 export class CaseCountComponent implements OnInit {
 
   data: any = null;
+  isLoading: boolean = false;
 
   constructor(private _apiService: ApiService) { }
 
@@ -17,8 +18,10 @@ export class CaseCountComponent implements OnInit {
   }
   
   async init(){
+    this.isLoading = true;
     let data = await this._apiService.getCaseCounts();
-    this.data = data.body.result;
+    this.data = data.body;
+    this.isLoading = false;
   }
 
 }

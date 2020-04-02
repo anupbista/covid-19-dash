@@ -3,10 +3,12 @@
 @import './themes/variable.scss';
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
+    background: #f9faff;
+}
+.light-theme .mat-toolbar.mat-primary{
+    color: #fff;
+}
 .app-padding{
     padding: 20px;
-}
-.app-tooltip{
-    background: red !important;
 }

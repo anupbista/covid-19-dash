@@ -6,6 +6,7 @@ import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { ApiService } from '../../../services/api.service';
 import getCountryName from '../../../helper/countryname';
 import getCountryISO2 from '../../../helper/countrycode';
+import getCountryCodeFromName from '../../../helper/countrycodename';
 
 @Component({
   selector: 'app-world-map',
@@ -15,6 +16,7 @@ import getCountryISO2 from '../../../helper/countrycode';
 export class WorldMapComponent implements OnInit {
 
   mapData = [];
+  isLoading: boolean = false;
 
   constructor(private _apiService: ApiService) {
     am4core.useTheme(am4themes_animated);
@@ -25,19 +27,20 @@ export class WorldMapComponent implements OnInit {
   }
 
   async getWorldData(){
+    this.isLoading = true;
     let chart = am4core.create("chartdiv", am4maps.MapChart);
 
     let data = await this._apiService.getCountryData();
-    data.body.result.forEach(element => {
-      let code = Object.keys(element)[0];
-
+    data.body.forEach(element => {
+      let code = getCountryCodeFromName(element.country);
       let country = { 
-        "id": getCountryISO2(code),
-        "name": getCountryName(getCountryISO2(code)),
-        "value": element[code].confirmed,
-        "deaths": element[code].deaths,
-        "recovered": element[code].recovered,
-        "color": chart.colors.getIndex(element[code].confirmed) 
+        "id": code,
+        "name": element.country,
+        "value": element.cases,
+        "active": element.active,
+        "deaths": element.deaths,
+        "recovered": element.recovered,
+        "color": chart.colors.getIndex(element.active) 
       };
       this.mapData.push(country);
     });
@@ -52,7 +55,7 @@ export class WorldMapComponent implements OnInit {
 
     // Set projection
     chart.projection = new am4maps.projections.Miller();
-    
+
     // Create map polygon series
     let polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
     polygonSeries.exclude = ["AQ"];
@@ -60,6 +63,11 @@ export class WorldMapComponent implements OnInit {
     polygonSeries.nonScalingStroke = true;
     polygonSeries.strokeWidth = 0.5;
     polygonSeries.calculateVisualCenter = true;
+
+    let polygonTemplate = polygonSeries.mapPolygons.template;
+    polygonTemplate.tooltipText = "{name}";
+    polygonTemplate.fill = am4core.color("#dddddd");
+    polygonTemplate.stroke = am4core.color("#dddddd")
     
     let imageSeries = chart.series.push(new am4maps.MapImageSeries());
     imageSeries.data = this.mapData;
@@ -71,9 +79,16 @@ export class WorldMapComponent implements OnInit {
     let circle = imageTemplate.createChild(am4core.Circle);
     circle.fillOpacity = 0.7;
     circle.propertyFields.fill = "color";
+    circle.propertyFields.fillOpacity = '0.5';
+    circle.propertyFields.strokeWidth = '0';
     circle.tooltipText = `{name}: [bold]{value}[/] 
     Deaths: [bold]{deaths}[/]
     Recovered: [bold]{recovered}[/]`;
+
+    chart.events.on("ready",()=>{
+      this.isLoading = false;
+    })
+
     imageSeries.heatRules.push({
       "target": circle,
       "property": "radius",
@@ -99,6 +114,9 @@ export class WorldMapComponent implements OnInit {
        }
        return longitude;
     })
+
+    this.isLoading = false;
+
   }
 
 }

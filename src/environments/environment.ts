@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  apiUrl: 'https://covidapi.info/api/v1/',
+  apiUrl: 'http://api.coronastatistics.live/',
   production: false
 };
 
