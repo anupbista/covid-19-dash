@@ -2,14 +2,14 @@
     <mat-card fxFlex="1 0 calc(50% - 40px)" fxFlex.gt-xs="1 0 calc(25% - 40px)" class="case-count mat-elevation-z0 total" fxLayout="column" fxLayoutAlign="center center">
         <div fxLayout="row" fxLayoutAlign="space-around center">
             <mat-icon>done</mat-icon>
-            <h2>{{ data.cases }}</h2>
+            <h2>{{ data.confirmed }}</h2>
         </div>
         <h3>Confirmed</h3>
     </mat-card>
     <mat-card fxFlex="1 0 calc(50% - 40px)" fxFlex.gt-xs="1 0 calc(25% - 40px)" class="case-count mat-elevation-z0 active" fxLayout="column" fxLayoutAlign="center center">
         <div fxLayout="row" fxLayoutAlign="space-around center">
             <mat-icon>single_bed</mat-icon>
-            <h2>{{ data.cases - data.recovered - data.deaths }}</h2>
+            <h2>{{ data.confirmed - data.recovered - data.deaths }}</h2>
         </div>
         <h3>Active</h3>
     </mat-card>

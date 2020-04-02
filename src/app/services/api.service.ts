@@ -9,10 +9,15 @@ export class ApiService {
   constructor(private _httpService: HttpService) { }
 
   getCaseCounts(){
-    return this._httpService.apiHttpGet('all');
+    return this._httpService.apiHttpGet('global');
   }
 
   getCountryData(){
-    return this._httpService.apiHttpGet('countries');
+    return this._httpService.apiHttpGet('global/latest');
   }
+
+  getLineChartData(){
+    return this._httpService.apiHttpGet('global/count');
+  }
+
 }

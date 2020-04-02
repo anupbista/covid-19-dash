@@ -14,6 +14,7 @@ import { ApiService } from './services/api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { WorldMapComponent } from './components/dashboard/world-map/world-map.component';
 import { WorldDatatableComponent } from './components/dashboard/world-datatable/world-datatable.component';
+import { LineChartComponent } from './components/dashboard/line-chart/line-chart.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { WorldDatatableComponent } from './components/dashboard/world-datatable/
     DashboardComponent,
     CaseCountComponent,
     WorldMapComponent,
-    WorldDatatableComponent
+    WorldDatatableComponent,
+    LineChartComponent
   ],
   imports: [
     RouterModule,

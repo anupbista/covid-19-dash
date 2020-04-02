@@ -8,6 +8,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatIconModule} from '@angular/material/icon';
 import { MatTableModule} from '@angular/material/table';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 const modules: any[] = [
   FlexLayoutModule,
@@ -19,6 +20,7 @@ const modules: any[] = [
   MatInputModule,
   MatIconModule,
   MatTableModule,
+  MatButtonToggleModule
 ];
 
 @NgModule({

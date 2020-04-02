@@ -4,10 +4,7 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
-    background: #f9faff;
-}
-.light-theme .mat-toolbar.mat-primary{
-    color: #fff;
+    background: $app-primary;
 }
 .app-padding{
     padding: 20px;

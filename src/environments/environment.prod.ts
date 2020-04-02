@@ -1,4 +1,4 @@
 export const environment = {
-  apiUrl: 'https://api.coronastatistics.live/',
+  apiUrl: 'https://covidapi.info/api/v1/',
   production: true
 };

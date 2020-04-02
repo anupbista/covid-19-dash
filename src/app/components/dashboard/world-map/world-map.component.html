@@ -1,7 +1,12 @@
 <mat-card class="mat-elevation-z0" fxFlex fxLayout="column" fxLayoutAlign="center">
     <div class="app-padding" fxFlex fxLayout="row wrap" fxLayoutAlign="space-between center">
         <h2 class="no-margin">Global</h2>
-        <!-- <h6>sxc</h6> -->
+        <mat-button-toggle-group [value]="worldMapMode" (change)="toggleView($event)">
+            <mat-button-toggle value="confirm"><mat-icon>done</mat-icon></mat-button-toggle>
+            <mat-button-toggle value="active"><mat-icon>single_bed</mat-icon></mat-button-toggle>
+            <mat-button-toggle value="recovered"><mat-icon>verified_user</mat-icon></mat-button-toggle>
+            <mat-button-toggle value="death"> <mat-icon>error</mat-icon></mat-button-toggle>
+        </mat-button-toggle-group>
     </div>
     <app-dataloading *ngIf="isLoading"></app-dataloading>
     <div id="chartdiv" style="width: 100%; height: 500px"></div>

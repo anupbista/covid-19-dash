@@ -15,10 +15,13 @@ import getCountryCodeFromName from '../../../helper/countrycodename';
 })
 export class WorldMapComponent implements OnInit {
 
+  public worldMapMode: string = 'confirm';
+
   mapData = [];
+  private mapChart: am4maps.MapChart;
   isLoading: boolean = false;
 
-  constructor(private _apiService: ApiService) {
+  constructor(private _apiService: ApiService, private zone: NgZone,) {
     am4core.useTheme(am4themes_animated);
   }
 
@@ -26,25 +29,14 @@ export class WorldMapComponent implements OnInit {
     this.getWorldData();
   }
 
-  async getWorldData(){
-    this.isLoading = true;
+  initWorldMap(){
+    if (this.mapChart) {
+      this.mapChart.dispose();
+    }
     let chart = am4core.create("chartdiv", am4maps.MapChart);
-
-    let data = await this._apiService.getCountryData();
-    data.body.forEach(element => {
-      let code = getCountryCodeFromName(element.country);
-      let country = { 
-        "id": code,
-        "name": element.country,
-        "value": element.cases,
-        "active": element.active,
-        "deaths": element.deaths,
-        "recovered": element.recovered,
-        "color": chart.colors.getIndex(element.active) 
-      };
-      this.mapData.push(country);
+    this.mapData.forEach(element => {
+      element.color = this.worldMapMode == 'confirm' ? '#8888ff' : this.worldMapMode == 'active' ? '#e4f67c' :  this.worldMapMode == 'recovered' ? '#64e87a' : '#e86464';
     });
-
     let title = chart.titles.create();
     // title.text = "[bold font-size: 20]Population of the World in 2011[/]\nsource: Gapminder";
     title.textAlign = "middle";
@@ -116,7 +108,39 @@ export class WorldMapComponent implements OnInit {
     })
 
     this.isLoading = false;
+  }
 
+  async getWorldData(){
+    this.isLoading = true;
+    let data = await this._apiService.getCountryData();
+    data.body.result.forEach(element => {
+      let code = Object.keys(element)[0];
+      let country = { 
+        "id": getCountryISO2(code),
+        "name": getCountryName(getCountryISO2(code)),
+        "value": element[code].confirmed,
+        "deaths": element[code].deaths,
+        "recovered": element[code].recovered,
+        "color": this.worldMapMode == 'confirm' ? '#8888ff' : this.worldMapMode == 'active' ? '#e4f67c' :  this.worldMapMode == 'recovered' ? '#64e87a' : '#e86464'
+      };
+      this.mapData.push(country);
+    });
+    this.isLoading = false;
+    this.initWorldMap();
+
+  }
+
+  toggleView(event){
+    this.worldMapMode = event.value;
+    this.initWorldMap();
+  }
+
+  ngOnDestroy() {
+    this.zone.runOutsideAngular(() => {
+      if (this.mapChart) {
+        this.mapChart.dispose();
+      }
+    });
   }
 
 }

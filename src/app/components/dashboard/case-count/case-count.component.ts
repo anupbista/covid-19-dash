@@ -20,7 +20,7 @@ export class CaseCountComponent implements OnInit {
   async init(){
     this.isLoading = true;
     let data = await this._apiService.getCaseCounts();
-    this.data = data.body;
+    this.data = data.body.result;
     this.isLoading = false;
   }
 
