@@ -33,23 +33,25 @@ export class WorldMapComponent implements OnInit {
     if (this.mapChart) {
       this.mapChart.dispose();
     }
-    let chart = am4core.create("mapdiv", am4maps.MapChart);
+    this.mapChart = am4core.create("mapdiv", am4maps.MapChart);
     this.mapData.forEach(element => {
       element.color = this.worldMapMode == 'confirm' ? '#8888ff' : this.worldMapMode == 'active' ? '#e4f67c' :  this.worldMapMode == 'recovered' ? '#64e87a' : '#e86464';
     });
-    let title = chart.titles.create();
+    let title = this.mapChart.titles.create();
     // title.text = "[bold font-size: 20]Population of the World in 2011[/]\nsource: Gapminder";
     title.textAlign = "middle";
 
     // Set map definition
-    chart.geodata = am4geodata_worldLow;
-    chart.logo.height = -15;
+    this.mapChart.geodata = am4geodata_worldLow;
+    this.mapChart.logo.height = -15;
 
     // Set projection
-    chart.projection = new am4maps.projections.Miller();
-
+    this.mapChart.projection = new am4maps.projections.Orthographic();
+    this.mapChart.panBehavior = "rotateLongLat";
+    this.mapChart.padding(20,20,20,20);
+    
     // Create map polygon series
-    let polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
+    let polygonSeries = this.mapChart.series.push(new am4maps.MapPolygonSeries());
     polygonSeries.exclude = ["AQ"];
     polygonSeries.useGeodata = true;
     polygonSeries.nonScalingStroke = true;
@@ -61,7 +63,7 @@ export class WorldMapComponent implements OnInit {
     polygonTemplate.fill = am4core.color("#dddddd");
     polygonTemplate.stroke = am4core.color("#dddddd")
     
-    let imageSeries = chart.series.push(new am4maps.MapImageSeries());
+    let imageSeries = this.mapChart.series.push(new am4maps.MapImageSeries());
     imageSeries.data = this.mapData;
     imageSeries.dataFields.value = "value";
     
@@ -77,7 +79,7 @@ export class WorldMapComponent implements OnInit {
     Deaths: [bold]{deaths}[/]
     Recovered: [bold]{recovered}[/]`;
 
-    chart.events.on("ready",()=>{
+    this.mapChart.events.on("ready",()=>{
       this.isLoading = false;
     })
 

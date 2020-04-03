@@ -1,4 +1,6 @@
 import { Component, HostBinding } from '@angular/core';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import { CommonService } from './services/common.service';
 
 @Component({
   selector: 'app-root',
@@ -6,14 +8,23 @@ import { Component, HostBinding } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  private isDarkTheme: boolean = false;
 
-  @HostBinding('class')
-  get themeMode(){
-    return this.isDarkTheme ? 'dark-theme' : 'light-theme'
+  constructor(breakpointObserver: BreakpointObserver, private _commonService: CommonService) {
+    breakpointObserver.observe([
+      Breakpoints.HandsetLandscape,
+      Breakpoints.HandsetPortrait
+    ]).subscribe(result => {
+      if (result.matches) {
+        this._commonService.isSmallDevice = breakpointObserver.isMatched('(max-width: 599px)');
+      }
+    });
   }
 
-  changeThemeMode(event){
-    this.isDarkTheme = event.checked;
+  launchWHO(){
+    window.open(
+      'https://www.who.int/health-topics/coronavirus',
+      '_blank'
+    );
   }
+
 }

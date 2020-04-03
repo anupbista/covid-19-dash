@@ -15,6 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { WorldMapComponent } from './components/dashboard/world-map/world-map.component';
 import { WorldDatatableComponent } from './components/dashboard/world-datatable/world-datatable.component';
 import { LineChartComponent } from './components/dashboard/line-chart/line-chart.component';
+import { SymptomsComponent } from './components/dashboard/symptoms/symptoms.component';
+import { PreventionComponent } from './components/dashboard/prevention/prevention.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { LineChartComponent } from './components/dashboard/line-chart/line-chart
     CaseCountComponent,
     WorldMapComponent,
     WorldDatatableComponent,
-    LineChartComponent
+    LineChartComponent,
+    SymptomsComponent,
+    PreventionComponent
   ],
   imports: [
     RouterModule,
@@ -34,6 +38,7 @@ import { LineChartComponent } from './components/dashboard/line-chart/line-chart
     MaterialModule,
     BrowserAnimationsModule
   ],
+  entryComponents: [SymptomsComponent, PreventionComponent],
   providers: [HttpService, ApiService],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,6 @@
-<mat-card class="mat-elevation-z0" fxFlex fxLayout="column" fxLayoutAlign="center">
-    <div class="app-padding" fxFlex fxLayout="row wrap" fxLayoutAlign="space-between center">
-        <h2 class="no-margin">Global</h2>
+<mat-card class="mat-elevation-z0 d-flex flex-column justify-content-start">
+    <div class="d-flex justify-content-between">
+        <h2 class="no-margin">Global Areas</h2>
         <mat-button-toggle-group [value]="worldMapMode" (change)="toggleView($event)">
             <mat-button-toggle value="confirm"><mat-icon>done</mat-icon></mat-button-toggle>
             <mat-button-toggle value="active"><mat-icon>single_bed</mat-icon></mat-button-toggle>
@@ -8,6 +8,6 @@
             <mat-button-toggle value="death"> <mat-icon>error</mat-icon></mat-button-toggle>
         </mat-button-toggle-group>
     </div>
-    <app-dataloading *ngIf="isLoading"></app-dataloading>
-    <div id="mapdiv" style="width: 100%; height: 500px"></div>
+    <app-dataloading *ngIf="isLoading" class="d-flex align-self-center mt-5"></app-dataloading>
+    <div id="mapdiv" style="width: 100%; height: 330px"></div>
 </mat-card>

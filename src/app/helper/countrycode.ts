@@ -250,5 +250,7 @@ let countryISOMapping = {
   }
   
   export default function getCountryISO2(countryCode) {
-    return countryISOMapping[countryCode]
+    if(countryISOMapping[countryCode])
+      return countryISOMapping[countryCode]
+    else return countryCode
   }

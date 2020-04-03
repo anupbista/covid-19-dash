@@ -1,4 +1,36 @@
 <app-case-count></app-case-count>
-<app-world-map></app-world-map>
-<app-line-chart></app-line-chart>
-<!-- <!-- <app-world-datatable></app-world-datatable> -->
+<div class="row">
+    <div class="col-md-6 col-12 section">
+        <app-world-map></app-world-map>
+    </div>
+    <div class="col-md-6 col-12 section info-section">
+        <div class="app-card info-card row mat-elevation-z0">
+            <div class="col-md-4">
+                <img src="assets/medical_research.svg" style="max-width: 130px;" alt="Prevent Infection">
+            </div>
+            <div class="col-md-8 info-text">
+                <button (click)="openPreventionDialog()" mat-stroked-button color="accent">View Preventions</button>
+                <h4 class="mt-3 text-light">Follow these measures to prevent from infection against Covid-19</h4>
+            </div>
+        </div>
+        <div class="app-card info-card row mat-elevation-z0">
+            <div class="col-md-4">
+                <img src="assets/sick_person.png" style="max-width: 130px;" alt="View symptoms">
+            </div>
+            <div class="col-md-8 info-text">
+                <button (click)="openSynptomsDialog()" mat-stroked-button color="accent">View symptoms</button>
+                <h4 class="mt-3 text-light">Find out the symptoms of Covid-19</h4>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-12 section">
+        <app-line-chart></app-line-chart>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-12 section">
+        <app-world-datatable></app-world-datatable>
+    </div>
+</div>

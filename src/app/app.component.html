@@ -1,10 +1,9 @@
 <mat-toolbar color="primary">
-    <mat-toolbar-row>
+    <mat-toolbar-row class="d-flex justify-content-between">
         <span>Covid-19-Dash</span>
-        <!-- <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
-            <mat-slide-toggle (change)="changeThemeMode($event)"
-          [color]="'accent'"></mat-slide-toggle>
-        </div> -->
+        <button (click)="launchWHO()" mat-stroked-button color="accent">WHO</button>
     </mat-toolbar-row>
 </mat-toolbar>
-<router-outlet></router-outlet>
+<div class="container-fluid">
+    <router-outlet></router-outlet>
+</div>

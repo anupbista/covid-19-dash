@@ -9,6 +9,9 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatIconModule} from '@angular/material/icon';
 import { MatTableModule} from '@angular/material/table';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import {MatDialogModule} from '@angular/material/dialog';
 
 const modules: any[] = [
   FlexLayoutModule,
@@ -17,7 +20,10 @@ const modules: any[] = [
   MatSlideToggleModule,
   MatCardModule,
   MatButtonModule,
+  MatSortModule,
+  MatPaginatorModule,
   MatInputModule,
+  MatDialogModule,
   MatIconModule,
   MatTableModule,
   MatButtonToggleModule

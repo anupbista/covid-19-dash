@@ -4,6 +4,7 @@ import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import { ApiService } from '../../../services/api.service';
 import * as moment from 'moment';
+import { CommonService } from '../../../services/common.service';
 
 @Component({
 	selector: 'app-line-chart',
@@ -15,7 +16,7 @@ export class LineChartComponent implements OnInit {
 	private lineChart: am4charts.XYChart;
 	isLoading: boolean = false;
 
-	constructor(private _apiService: ApiService) {
+	constructor(private _apiService: ApiService, private _commonService: CommonService) {
 		am4core.useTheme(am4themes_animated);
 	}
 
@@ -54,7 +55,7 @@ export class LineChartComponent implements OnInit {
 		}
 		// Create chart instance
 		this.lineChart = am4core.create('chartdiv', am4charts.XYChart);
-		this.lineChart.logo.height = -15;
+		this.lineChart.logo.height = -10000000;
 		// Increase contrast by taking evey second color
 		this.lineChart.colors.step = 2;
 
@@ -96,7 +97,7 @@ export class LineChartComponent implements OnInit {
 
 	// Create series
 	createAxisAndSeries(field, name, opposite, bullet) {
-		let valueAxis: any = this.lineChart.yAxes.push(new am4charts.ValueAxis());
+		let valueAxis:any = this.lineChart.yAxes.push(new am4charts.ValueAxis());
 		if (this.lineChart.yAxes.indexOf(valueAxis) != 0) {
 			valueAxis.syncWithAxis = this.lineChart.yAxes.getIndex(0);
 		}
@@ -179,5 +180,6 @@ export class LineChartComponent implements OnInit {
 		valueAxis.renderer.line.stroke = series.stroke;
 		valueAxis.renderer.labels.template.fill = series.stroke;
 		valueAxis.renderer.opposite = opposite;
+		valueAxis.renderer.disabled = this._commonService.isSmallDevice;
 	}
 }
