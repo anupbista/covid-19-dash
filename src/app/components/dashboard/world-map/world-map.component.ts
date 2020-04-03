@@ -33,7 +33,7 @@ export class WorldMapComponent implements OnInit {
     if (this.mapChart) {
       this.mapChart.dispose();
     }
-    let chart = am4core.create("chartdiv", am4maps.MapChart);
+    let chart = am4core.create("mapdiv", am4maps.MapChart);
     this.mapData.forEach(element => {
       element.color = this.worldMapMode == 'confirm' ? '#8888ff' : this.worldMapMode == 'active' ? '#e4f67c' :  this.worldMapMode == 'recovered' ? '#64e87a' : '#e86464';
     });
