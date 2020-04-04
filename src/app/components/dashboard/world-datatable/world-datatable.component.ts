@@ -68,7 +68,7 @@ export class WorldDatatableComponent implements OnInit {
   }
 
   onRowClick(row){
-    this.router.navigate(['/dashboard', row.country.toLowerCase()])
+    this.router.navigate(['/dashboard', row.country])
   }
   
 }
