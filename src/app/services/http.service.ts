@@ -10,14 +10,14 @@ export class HttpService {
   constructor(private httpClient: HttpClient) { }
 
    // GET
-   apiHttpGet(apiEndPoint): Promise<any> {
+   apiHttpGet(api, apiEndPoint): Promise<any> {
     let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       }),
       observe: "response" as 'body'
     }
-    return this.httpClient.get(environment.apiUrl + apiEndPoint, httpOptions).toPromise();
+    return this.httpClient.get(api + apiEndPoint, httpOptions).toPromise();
   }
   
 }

@@ -5,11 +5,22 @@
   <title>Covid-19-dash</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="assets/dashboard.png">
+  <link rel="icon" type="image/x-icon" href="assets/logo.svg">
   <link href="https://fonts.googleapis.com/css2?family=Sen:wght@400;500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body class="mat-typography light-theme">
-  <app-root></app-root>
+  <app-root>
+    <div class="loader d-flex justify-content-center align-items-center flex-column">
+      <img style="height: 100px;width: 100px;" src="assets/logo.svg" alt="Covid-19-dash">
+      <div class="cssload-loader">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </app-root>
 </body>
 </html>

@@ -4,3 +4,23 @@ table {
 th.mat-sort-header-sorted {
     color: black;
 }
+.data-table{
+    max-height: 500px;
+}
+
+
+#data-table::-webkit-scrollbar-track
+{
+	background-color: #eeeeee;
+}
+
+#data-table::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #c5c5c5;
+}
+
+#data-table::-webkit-scrollbar-thumb
+{
+	background-color: #c5c5c5;
+}

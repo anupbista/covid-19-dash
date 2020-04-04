@@ -10,18 +10,25 @@ export class CaseCountComponent implements OnInit {
 
   data: any = null;
   isLoading: boolean = false;
-
+  error: boolean = false;
   constructor(private _apiService: ApiService) { }
 
   ngOnInit(): void {
+    this.error = false;
     this.init();
   }
   
   async init(){
-    this.isLoading = true;
-    let data = await this._apiService.getCaseCounts();
-    this.data = data.body.result;
-    this.isLoading = false;
+    try {
+      this.isLoading = true;
+      let data = await this._apiService.getCaseCounts();
+      this.data = data.body;
+      this.isLoading = false;
+    } catch (error) {
+      this.error = true;
+      this.isLoading = false;
+
+    }
   }
 
 }

@@ -17,6 +17,10 @@ import { WorldDatatableComponent } from './components/dashboard/world-datatable/
 import { LineChartComponent } from './components/dashboard/line-chart/line-chart.component';
 import { SymptomsComponent } from './components/dashboard/symptoms/symptoms.component';
 import { PreventionComponent } from './components/dashboard/prevention/prevention.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { DailyUpdatesComponent } from './components/dashboard/daily-updates/daily-updates.component';
+import { WeeklyUpdatesComponent } from './components/dashboard/weekly-updates/weekly-updates.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +31,11 @@ import { PreventionComponent } from './components/dashboard/prevention/preventio
     WorldDatatableComponent,
     LineChartComponent,
     SymptomsComponent,
-    PreventionComponent
+    PreventionComponent,
+    FooterComponent,
+    HeaderComponent,
+    DailyUpdatesComponent,
+    WeeklyUpdatesComponent
   ],
   imports: [
     RouterModule,

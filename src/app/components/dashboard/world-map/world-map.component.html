@@ -2,12 +2,13 @@
     <div class="d-flex justify-content-between">
         <h2 class="no-margin">Global Areas</h2>
         <mat-button-toggle-group [value]="worldMapMode" (change)="toggleView($event)">
-            <mat-button-toggle value="confirm"><mat-icon>done</mat-icon></mat-button-toggle>
-            <mat-button-toggle value="active"><mat-icon>single_bed</mat-icon></mat-button-toggle>
-            <mat-button-toggle value="recovered"><mat-icon>verified_user</mat-icon></mat-button-toggle>
-            <mat-button-toggle value="death"> <mat-icon>error</mat-icon></mat-button-toggle>
+            <mat-button-toggle matTooltip="Filter confirmed cases" value="confirm"><mat-icon>done</mat-icon></mat-button-toggle>
+            <mat-button-toggle matTooltip="Filter active cases" value="active"><mat-icon>single_bed</mat-icon></mat-button-toggle>
+            <mat-button-toggle matTooltip="Filter recovered cases" value="recovered"><mat-icon>verified_user</mat-icon></mat-button-toggle>
+            <mat-button-toggle matTooltip="Filter death cases" value="death"> <mat-icon>error</mat-icon></mat-button-toggle>
         </mat-button-toggle-group>
     </div>
     <app-dataloading *ngIf="isLoading" class="d-flex align-self-center mt-5"></app-dataloading>
-    <div id="mapdiv" style="width: 100%; height: 330px"></div>
+    <div id="mapdiv" [hidden]="error" style="width: 100%; height: 330px"></div>
 </mat-card>
+<app-error *ngIf="error && !isLoading"></app-error>

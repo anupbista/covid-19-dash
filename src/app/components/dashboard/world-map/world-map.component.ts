@@ -20,12 +20,14 @@ export class WorldMapComponent implements OnInit {
   mapData = [];
   private mapChart: am4maps.MapChart;
   isLoading: boolean = false;
+  error: boolean = false;
 
   constructor(private _apiService: ApiService, private zone: NgZone,) {
     am4core.useTheme(am4themes_animated);
   }
 
   ngOnInit(): void {
+    this.error = false;
     this.getWorldData();
   }
 
@@ -75,9 +77,11 @@ export class WorldMapComponent implements OnInit {
     circle.propertyFields.fill = "color";
     circle.propertyFields.fillOpacity = '0.5';
     circle.propertyFields.strokeWidth = '0';
-    circle.tooltipText = `{name}: [bold]{value}[/] 
-    Deaths: [bold]{deaths}[/]
-    Recovered: [bold]{recovered}[/]`;
+    circle.tooltipText = this.worldMapMode == 'confirm' ? `{name}
+    Confirmed: [bold]{value}[/]` : this.worldMapMode == 'active' ? `{name}
+    Active: [bold]{active}[/]` :  this.worldMapMode == 'recovered' ? `{name}
+    Recovered: [bold]{recovered}[/]` : `{name}
+    Deaths: [bold]{deaths}[/]`;
 
     this.mapChart.events.on("ready",()=>{
       this.isLoading = false;
@@ -113,23 +117,27 @@ export class WorldMapComponent implements OnInit {
   }
 
   async getWorldData(){
-    this.isLoading = true;
-    let data = await this._apiService.getCountryData();
-    data.body.result.forEach(element => {
-      let code = Object.keys(element)[0];
-      let country = { 
-        "id": getCountryISO2(code),
-        "name": getCountryName(getCountryISO2(code)),
-        "value": element[code].confirmed,
-        "deaths": element[code].deaths,
-        "recovered": element[code].recovered,
-        "color": this.worldMapMode == 'confirm' ? '#8888ff' : this.worldMapMode == 'active' ? '#e4f67c' :  this.worldMapMode == 'recovered' ? '#64e87a' : '#e86464'
-      };
-      this.mapData.push(country);
-    });
-    this.isLoading = false;
-    this.initWorldMap();
-
+    try {
+      this.isLoading = true;
+      let data = await this._apiService.getCountryData();
+      data.body.forEach(element => {
+        let country = { 
+          "id": getCountryCodeFromName(element.country),
+          "name": element.country,
+          "value": element.cases,
+          "deaths": element.deaths,
+          "recovered": element.recovered,
+          "active": element.cases - element.deaths - element.recovered,
+          "color": this.worldMapMode == 'confirm' ? '#8888ff' : this.worldMapMode == 'active' ? '#e4f67c' :  this.worldMapMode == 'recovered' ? '#64e87a' : '#e86464'
+        };
+        this.mapData.push(country);
+      });
+      this.isLoading = false;
+      this.initWorldMap();
+    } catch (error) {
+      this.isLoading = false;
+      this.error = true;
+    }
   }
 
   toggleView(event){

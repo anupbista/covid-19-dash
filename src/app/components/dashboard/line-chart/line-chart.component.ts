@@ -15,12 +15,14 @@ export class LineChartComponent implements OnInit {
 	public lineChartData = [];
 	private lineChart: am4charts.XYChart;
 	isLoading: boolean = false;
+	error: boolean = false;
 
 	constructor(private _apiService: ApiService, private _commonService: CommonService) {
 		am4core.useTheme(am4themes_animated);
 	}
-
+	
 	ngOnInit(): void {
+		this.error = false;
 		this.getLineChartData();
 	}
 
@@ -31,52 +33,57 @@ export class LineChartComponent implements OnInit {
 	}
 
 	async getLineChartData() {
-		this.isLoading = true;
-		// get data from api
-		this.lineChartData = [];
-		let data = await this._apiService.getLineChartData();
+		try {
+			this.isLoading = true;
+			// get data from api
+			this.lineChartData = [];
+			let data = await this._apiService.getLineChartData();
 
-		for (var key in data.body.result) {
-			// skip loop if the property is from prototype
-			if (!data.body.result.hasOwnProperty(key)) continue;
-			let cdata = {
-				date: key,
-				confirmed: 0,
-				recovered: 0,
-				deaths: 0
-			};
-			var obj = data.body.result[key];
-			for (var prop in obj) {
+			for (var key in data.body) {
 				// skip loop if the property is from prototype
-				if (!obj.hasOwnProperty(prop)) continue;
-				cdata[prop] = obj[prop];
+				if (!data.body.hasOwnProperty(key)) continue;
+				let cdata = {
+					date: key,
+					cases: 0,
+					recovered: 0,
+					deaths: 0
+				};
+				var obj = data.body[key];
+				for (var prop in obj) {
+					// skip loop if the property is from prototype
+					if (!obj.hasOwnProperty(prop)) continue;
+					cdata[prop] = obj[prop];
+				}
+				this.lineChartData.push(cdata);
 			}
-			this.lineChartData.push(cdata);
+			// Create chart instance
+			this.lineChart = am4core.create('chartdiv', am4charts.XYChart);
+			this.lineChart.logo.height = -10000000;
+			// Increase contrast by taking evey second color
+			this.lineChart.colors.step = 2;
+
+			// Add data
+			this.lineChart.data = this.generateChartData();
+
+			// Create axes
+			let dateAxis = this.lineChart.xAxes.push(new am4charts.DateAxis());
+			dateAxis.renderer.minGridDistance = 50;
+
+			this.createAxisAndSeries('cases', 'Confirmed', false, 'circle');
+			this.createAxisAndSeries('active', 'Active', true, 'triangle');
+			this.createAxisAndSeries('recovered', 'Recovered', true, 'rectangle');
+			this.createAxisAndSeries('deaths', 'Deaths', true, 'square');
+
+			// Add legend
+			this.lineChart.legend = new am4charts.Legend();
+
+			// Add cursor
+			this.lineChart.cursor = new am4charts.XYCursor();
+			this.isLoading = false;
+		} catch (error) {
+			this.isLoading = false;
+			this.error = true;
 		}
-		// Create chart instance
-		this.lineChart = am4core.create('chartdiv', am4charts.XYChart);
-		this.lineChart.logo.height = -10000000;
-		// Increase contrast by taking evey second color
-		this.lineChart.colors.step = 2;
-
-		// Add data
-		this.lineChart.data = this.generateChartData();
-
-		// Create axes
-		let dateAxis = this.lineChart.xAxes.push(new am4charts.DateAxis());
-		dateAxis.renderer.minGridDistance = 50;
-
-		this.createAxisAndSeries('confirmed', 'Confirmed', false, 'circle');
-		this.createAxisAndSeries('active', 'Active', true, 'triangle');
-		this.createAxisAndSeries('recovered', 'Recovered', true, 'rectangle');
-		this.createAxisAndSeries('deaths', 'Deaths', true, 'square');
-
-		// Add legend
-		this.lineChart.legend = new am4charts.Legend();
-
-		// Add cursor
-		this.lineChart.cursor = new am4charts.XYCursor();
-		this.isLoading = false;
 	}
 
 	// generate some random data, quite different range
@@ -85,9 +92,9 @@ export class LineChartComponent implements OnInit {
 		for (var i = this.lineChartData.length - 20; i < this.lineChartData.length; i++) {
 			chartData.push({
 				date: new Date(this.lineChartData[i].date),
-				confirmed: this.lineChartData[i].confirmed,
+				cases: this.lineChartData[i].cases,
 				active:
-					this.lineChartData[i].confirmed - this.lineChartData[i].recovered - this.lineChartData[i].deaths,
+					this.lineChartData[i].cases - this.lineChartData[i].recovered - this.lineChartData[i].deaths,
 				recovered: this.lineChartData[i].recovered,
 				deaths: this.lineChartData[i].deaths
 			});
@@ -166,7 +173,7 @@ export class LineChartComponent implements OnInit {
 				square.height = 10;
 				break;
 			default:
-				// confirmed
+				// cases
 				series.stroke = am4core.color('#8888ff');
 				series.fill =  am4core.color('#8888ff');
 				let bullet = series.bullets.push(new am4charts.CircleBullet());

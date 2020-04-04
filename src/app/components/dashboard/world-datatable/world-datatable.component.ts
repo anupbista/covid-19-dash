@@ -6,6 +6,7 @@ import getCountryName from '../../../helper/countryname';
 import getCountryISO2 from '../../../helper/countrycode';
 import { CommonService } from '../../../services/common.service';
 import {MatPaginator} from '@angular/material/paginator';
+import getCountryCodeFromName from 'src/app/helper/countrycodename';
 
 @Component({
   selector: 'app-world-datatable',
@@ -16,6 +17,7 @@ export class WorldDatatableComponent implements OnInit {
 
   displayedColumns: string[] = ['country', 'cases', 'active', 'recovered', 'deaths'];
   dataSource = new MatTableDataSource();
+  error: boolean = false;
 
   isLoading: boolean = false;
 
@@ -27,32 +29,36 @@ export class WorldDatatableComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.error = false;
     this.getDataTable();
   }
 
   async getDataTable(){
-    this.isLoading = true;
-    let data = await this._apiService.getCountryData();
-    let dataTableData= [];
-    data.body.result.forEach(element => {
-      let code = Object.keys(element)[0];
-      let country = { 
-        "code": getCountryISO2(code),
-        "country": getCountryName(getCountryISO2(code)),
-        "cases": element[code].confirmed,
-        "deaths": element[code].deaths,
-        "recovered": element[code].recovered,
-        "active": element[code].confirmed - element[code].recovered - element[code].deaths
-      };
-      dataTableData.push(country);
-    });
-    console.log(dataTableData)
-    this.dataSource = new MatTableDataSource(dataTableData);
-    setTimeout(() => {
-      this.dataSource.sort = this.sort; 
-      this.dataSource.paginator = this.paginator;
-    });
-    this.isLoading = false;
+    try {
+      this.isLoading = true;
+      let data = await this._apiService.getCountryData();
+      let dataTableData= [];
+      data.body.forEach(element => {
+        let country = { 
+          "code":getCountryCodeFromName(element.country),
+          "country": element.country,
+          "cases": element.cases,
+          "deaths": element.deaths,
+          "recovered": element.recovered,
+          "active": element.cases - element.recovered - element.deaths
+        };
+        dataTableData.push(country);
+      });
+      this.dataSource = new MatTableDataSource(dataTableData);
+      setTimeout(() => {
+        this.dataSource.sort = this.sort; 
+        this.dataSource.paginator = this.paginator;
+      });
+      this.isLoading = false;
+    } catch (error) {
+      this.isLoading = false;
+      this.error = true;
+    }
   }
 
   applyFilter(event: Event) {

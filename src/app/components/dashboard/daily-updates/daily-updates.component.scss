@@ -1,0 +1,28 @@
+.case-count{
+    margin-bottom: 15px;
+   h2{
+       margin: 0;
+       margin-left: 10px;
+       margin-right: 10px;
+       text-align: center;
+   }
+   p{
+       margin: 0;
+   }
+}
+.case-count.total{
+    background: var(--app-blue);
+    color: var(--app-blue-color);
+}
+.case-count.active{
+    background: var(--app-yellow);
+    color: var(--app-yellow-color);
+}
+.case-count.recovered{
+    background: var(--app-green);
+    color: var(--app-green-color);
+}
+.case-count.death{
+    background: var(--app-red);
+    color: var(--app-red-color);
+}

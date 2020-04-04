@@ -6,18 +6,21 @@ import { HttpService } from './http.service';
 })
 export class ApiService {
 
+  // https://github.com/OssamaRafique/Corona-Statistics-And-Tracker-Dashboard-Angular-9
+  private CORONASTATISTICS_LIVE = "https://api.coronastatistics.live/";
+
   constructor(private _httpService: HttpService) { }
 
   getCaseCounts(){
-    return this._httpService.apiHttpGet('global');
+    return this._httpService.apiHttpGet(this.CORONASTATISTICS_LIVE, 'all');
   }
 
   getCountryData(){
-    return this._httpService.apiHttpGet('global/latest');
+    return this._httpService.apiHttpGet(this.CORONASTATISTICS_LIVE, 'countries');
   }
 
   getLineChartData(){
-    return this._httpService.apiHttpGet('global/count');
+    return this._httpService.apiHttpGet(this.CORONASTATISTICS_LIVE, 'timeline/global');
   }
 
 }

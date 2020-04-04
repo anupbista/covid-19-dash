@@ -20,11 +20,4 @@ export class AppComponent {
     });
   }
 
-  launchWHO(){
-    window.open(
-      'https://www.who.int/health-topics/coronavirus',
-      '_blank'
-    );
-  }
-
 }

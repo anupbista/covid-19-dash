@@ -12,6 +12,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 const modules: any[] = [
   FlexLayoutModule,
@@ -26,7 +28,9 @@ const modules: any[] = [
   MatDialogModule,
   MatIconModule,
   MatTableModule,
-  MatButtonToggleModule
+  MatButtonToggleModule,
+  MatTooltipModule,
+  ScrollingModule
 ];
 
 @NgModule({
