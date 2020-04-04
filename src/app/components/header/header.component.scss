@@ -1,4 +1,17 @@
 .mat-toolbar span{
     text-transform: uppercase;
     color: #e86464;
+    cursor: pointer;
+    &:focus{
+        outline: none;
+    }
+}
+.breadcrumb-toolbar{
+    background: #fff;
+    padding: 0 16px;
+    height: 46px;
+    p{
+        margin: 0;
+        margin-left: 10px;
+    }
 }

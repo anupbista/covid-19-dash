@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { SymptomsComponent } from './symptoms/symptoms.component';
 import { PreventionComponent } from './prevention/prevention.component';
+import { CommonService } from '../../services/common.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,9 +11,10 @@ import { PreventionComponent } from './prevention/prevention.component';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private _commonService: CommonService) { }
 
   ngOnInit(): void {
+    this._commonService.country = null;
   }
 
   openSynptomsDialog(): void {
@@ -22,7 +24,6 @@ export class DashboardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
   }
 
@@ -33,7 +34,6 @@ export class DashboardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
   }
 

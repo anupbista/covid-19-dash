@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="app-padding" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="isLoading">
+        <app-dataloading></app-dataloading>
+    </div>
+</div>
+<app-error *ngIf="error && !isLoading"></app-error>
+<div class="row case-count-section" *ngIf="!isLoading && !error">
+    <div class="col-md-3 col-sm-6 col-6">
+        <mat-card class="case-count mat-elevation-z0 total text-center">
+            <div class="d-flex justify-content-center align-items-center">
+                <mat-icon>done</mat-icon>
+                <h2>{{ data.cases }}</h2>
+            </div>
+            <h3>Confirmed</h3>
+        </mat-card>
+    </div>
+    <div class="col-md-3 col-sm-6 col-6">
+        <mat-card class="case-count mat-elevation-z0 active text-center">
+            <div class="d-flex justify-content-center align-items-center">
+                <mat-icon>single_bed</mat-icon>
+                <h2>{{ data.cases - data.recovered - data.deaths }}</h2>
+            </div>
+            <h3>Active</h3>
+        </mat-card>
+    </div>
+    <div class="col-md-3 col-sm-6 col-6">
+        <mat-card class="case-count mat-elevation-z0 recovered text-center">
+            <div class="d-flex justify-content-center align-items-center">
+                <mat-icon>verified_user</mat-icon>
+                <h2>{{ data.recovered }}</h2>
+            </div>
+            <h3>Recovered</h3>
+        </mat-card>
+    </div>
+    <div class="col-md-3 col-sm-6 col-6">
+        <mat-card class="case-count mat-elevation-z0 death text-center">
+            <div class="d-flex justify-content-center align-items-center">
+                <mat-icon>error</mat-icon>
+                <h2>{{ data.deaths }}</h2>
+            </div>
+            <h3>Deaths</h3>
+        </mat-card>
+    </div>
+    <div class="row">
+        <div class="app-padding" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="isLoading">
+            <app-dataloading></app-dataloading>
+        </div>
+        <app-error *ngIf="error && !isLoading"></app-error>
+    </div>
+</div>

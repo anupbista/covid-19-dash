@@ -1,6 +1,17 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row class="d-flex justify-content-between">
-        <span>Covid-19-Dash</span>
+        <span [routerLink]="['/dashboard']">Covid-19-Dash</span>
         <button matTooltip="Go to WHO website" (click)="launchWHO()" mat-stroked-button color="accent">WHO</button>
     </mat-toolbar-row>
 </mat-toolbar>
+<div class="breadcrumb-toolbar d-flex justify-content-start align-items-center">
+    <ng-container *ngIf="!_commonService.country">
+        <mat-icon>language</mat-icon>
+        <p *ngIf="_commonService.lastUpdatedDate">(Last updated: {{ _commonService.lastUpdatedDate }})</p>
+    </ng-container>
+    <ng-container *ngIf="_commonService.country">
+        <img *ngIf="_commonService.countryCode" style="width: 40px;" [src]="'https://www.countryflags.io/'+ _commonService.countryCode +'/flat/64.png'" alt="{{ _commonService.country }}">
+       <p><b>{{ _commonService.country }}</b></p>
+       <p *ngIf="_commonService.lastUpdatedDate">(Last updated: {{ _commonService.lastUpdatedDate }})</p>
+    </ng-container>
+</div>

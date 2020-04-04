@@ -4,7 +4,7 @@ import { DataloadingComponent } from './components/dataloading/dataloading.compo
 import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
-  declarations: [DataloadingComponent, ErrorComponent],
+  declarations: [DataloadingComponent, ErrorComponent,],
   imports: [
     CommonModule
   ],

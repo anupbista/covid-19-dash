@@ -44,7 +44,6 @@ export class WeeklyUpdatesComponent implements OnInit {
         active: tempData[0].active - tempData[1].active,
         activeChange: Number(activeChange.toFixed(1)),
       }
-      console.log(this.data)
       this.isLoading = false;
     } catch (error) {
       this.error = true;

@@ -19,6 +19,10 @@ export class ApiService {
     return this._httpService.apiHttpGet(this.CORONASTATISTICS_LIVE, 'countries');
   }
 
+  getSingleCountryData(countryname){
+    return this._httpService.apiHttpGet(this.CORONASTATISTICS_LIVE, 'countries/' + countryname);
+  }
+
   getLineChartData(){
     return this._httpService.apiHttpGet(this.CORONASTATISTICS_LIVE, 'timeline/global');
   }

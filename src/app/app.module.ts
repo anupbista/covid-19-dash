@@ -21,6 +21,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { DailyUpdatesComponent } from './components/dashboard/daily-updates/daily-updates.component';
 import { WeeklyUpdatesComponent } from './components/dashboard/weekly-updates/weekly-updates.component';
+import { CountrydataComponent } from './components/countrydata/countrydata.component';
+import { NotfoundComponent } from './notfound/notfound.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { WeeklyUpdatesComponent } from './components/dashboard/weekly-updates/we
     FooterComponent,
     HeaderComponent,
     DailyUpdatesComponent,
-    WeeklyUpdatesComponent
+    WeeklyUpdatesComponent,
+    CountrydataComponent,
+    NotfoundComponent
   ],
   imports: [
     RouterModule,

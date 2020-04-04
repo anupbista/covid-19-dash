@@ -7,6 +7,7 @@ import getCountryISO2 from '../../../helper/countrycode';
 import { CommonService } from '../../../services/common.service';
 import {MatPaginator} from '@angular/material/paginator';
 import getCountryCodeFromName from 'src/app/helper/countrycodename';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-world-datatable',
@@ -24,7 +25,7 @@ export class WorldDatatableComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private _apiService: ApiService, private _commonService: CommonService) {
+  constructor(private _apiService: ApiService, private _commonService: CommonService, private router: Router) {
     
   }
 
@@ -49,12 +50,12 @@ export class WorldDatatableComponent implements OnInit {
         };
         dataTableData.push(country);
       });
+      this.isLoading = false;
       this.dataSource = new MatTableDataSource(dataTableData);
       setTimeout(() => {
         this.dataSource.sort = this.sort; 
         this.dataSource.paginator = this.paginator;
       });
-      this.isLoading = false;
     } catch (error) {
       this.isLoading = false;
       this.error = true;
@@ -64,6 +65,10 @@ export class WorldDatatableComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  onRowClick(row){
+    this.router.navigate(['/dashboard', row.country.toLowerCase()])
   }
   
 }
