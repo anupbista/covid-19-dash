@@ -1,10 +1,10 @@
 <div class="row">
-    <div class="app-padding" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="isLoading">
+    <div class="app-padding" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="isLoadingCaseCount">
         <app-dataloading></app-dataloading>
     </div>
 </div>
-<app-error *ngIf="error && !isLoading"></app-error>
-<div class="row case-count-section" *ngIf="!isLoading && !error">
+<app-error *ngIf="errorCaseCount && !isLoadingCaseCount"></app-error>
+<div class="row case-count-section" *ngIf="!isLoadingCaseCount && !errorCaseCount">
     <div class="col-md-3 col-sm-6 col-6">
         <mat-card class="case-count mat-elevation-z0 total text-center">
             <div class="d-flex justify-content-center align-items-center">
@@ -42,9 +42,9 @@
         </mat-card>
     </div>
     <div class="row">
-        <div class="app-padding" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="isLoading">
+        <div class="app-padding" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="isLoadingCaseCount">
             <app-dataloading></app-dataloading>
         </div>
-        <app-error *ngIf="error && !isLoading"></app-error>
+        <app-error *ngIf="errorCaseCount && !isLoadingCaseCount"></app-error>
     </div>
 </div>
