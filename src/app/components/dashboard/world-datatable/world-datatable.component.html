@@ -8,7 +8,7 @@
   </div>
   <app-dataloading *ngIf="isLoading" class="d-flex align-self-center mt-5"></app-dataloading>
    <div class="scroll-x data-table" id="data-table" [hidden]="isLoading || error">
-    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z0" matSortActive="country" matSortDirection="asc" matSortDisableClear>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z0" matSortActive="cases" matSortDirection="desc" matSortDisableClear>
 
       <ng-container matColumnDef="country">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Country </th>
