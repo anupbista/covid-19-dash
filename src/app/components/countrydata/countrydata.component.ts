@@ -77,14 +77,14 @@ export class CountrydataComponent implements OnInit {
 					subs: [
 						{
 							type: 'Critical',
-							percent: this.data.critical / this.data.active * 100,
+							percent: this.data.critical / total * 100,
 							value: this.data.critical,
 							color: '#ffbf6e'
 						},
 						{
 							type: 'Active',
-							percent: (this.data.active - this.data.critical) / this.data.active * 100,
-							value: this.data.active,
+							percent: (this.data.active - this.data.critical) / total * 100,
+							value: this.data.active - this.data.critical,
 							color: '#e4f67c'
 						}
 					]
