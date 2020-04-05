@@ -1,7 +1,8 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component, HostBinding, Inject, Renderer2 } from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import { CommonService } from './services/common.service';
 import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,11 @@ import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationErr
 })
 export class AppComponent {
 
-  constructor(breakpointObserver: BreakpointObserver, private _commonService: CommonService, private router: Router) {
+  switchMode(isDarkMode: boolean) {
+    const hostClass = isDarkMode ? 'dark-theme' : 'light-theme';
+    this.renderer.setAttribute(this.document.body, 'class', 'mat-typography ' + hostClass);
+  }
+  constructor(breakpointObserver: BreakpointObserver, private _commonService: CommonService, private router: Router,@Inject(DOCUMENT) private document: Document, private renderer: Renderer2) {
     breakpointObserver.observe([
       Breakpoints.HandsetLandscape,
       Breakpoints.HandsetPortrait

@@ -6,9 +6,14 @@ $app-accent:  mat-palette($mat-pink, 500, 900, A100);
 $app-warn:    mat-palette($mat-red);
 
 $app-light-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+$app-dark-theme: mat-dark-theme($app-primary, $app-accent, $app-warn);
 
 .light-theme{
     @include angular-material-theme($app-light-theme);
+}
+
+.dark-theme{
+    @include angular-material-theme($app-dark-theme);
 }
 
 $app-typography: mat-typography-config(

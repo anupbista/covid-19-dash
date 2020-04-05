@@ -228,3 +228,37 @@ button:focus{
 {
 	background-color: #c5c5c5;
 }
+
+// DARK THEME
+.dark-theme{
+	background: $app-primary-dark !important;
+	mat-card{
+		color: white !important;
+	}
+	.mat-toolbar.mat-primary{
+        background: #323232;
+	}
+	.breadcrumb-toolbar{
+        background: #424242 !important;
+        color: #fff !important;
+    }
+	.app-card{
+		background: #424242 !important;
+		color: white !important;
+		h4{
+			color: #fff !important;
+		}
+	}
+	table {
+		tr{
+			&:hover td{
+				background: #323232 !important;
+			}
+		}
+	}
+	.footer{
+		background: #323232 !important;
+		color: white !important;
+	}
+	
+}

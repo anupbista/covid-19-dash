@@ -2,6 +2,10 @@
     <mat-toolbar-row class="d-flex justify-content-between">
         <span [routerLink]="['/dashboard']">Covid-19-Dash</span>
         <div class="d-flex justify-content-end align-items-center">
+            <mat-slide-toggle class="mr-3" matTooltip="Toggle dark mode" (change)="onDarkModeSwitched($event)">
+                <mat-icon class="light-mode-icon" *ngIf="!_commonService.isDarkMode">wb_sunny</mat-icon>
+                <mat-icon class="dark-mode-icon" *ngIf="_commonService.isDarkMode">brightness_2</mat-icon>
+            </mat-slide-toggle>
             <button class="mr-3" matTooltip="COVID-19 Solidarity Response Fund for WHO" (click)="launchDonate()" mat-stroked-button color="success">Donate</button>
             <button matTooltip="Go to WHO website" (click)="launchWHO()" mat-stroked-button color="accent">WHO</button>
         </div>

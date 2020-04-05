@@ -9,6 +9,7 @@ export class CommonService {
 
   isSmallDevice: boolean = false;
   routeLoading: boolean = false;
+  isDarkMode: boolean = false;
 
   country: string = null;
   countryCode: string = null;

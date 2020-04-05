@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonService } from '../../services/common.service';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-header',
@@ -8,9 +9,17 @@ import { CommonService } from '../../services/common.service';
 })
 export class HeaderComponent implements OnInit {
 
+  @Output()
+  readonly darkModeSwitched = new EventEmitter<boolean>();
+
   constructor(public _commonService: CommonService) { }
 
   ngOnInit(): void {
+  }
+
+  onDarkModeSwitched({ checked }: MatSlideToggleChange) {
+    this._commonService.isDarkMode = checked;
+    this.darkModeSwitched.emit(checked);
   }
 
   launchWHO(){
