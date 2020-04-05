@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit {
 
   onDarkModeSwitched({ checked }: MatSlideToggleChange) {
     this._commonService.isDarkMode = checked;
+    this._commonService.setStorage('dtheme', checked ? '1' : '0');
     this.darkModeSwitched.emit(checked);
   }
 

@@ -45,7 +45,16 @@ export class AppComponent {
         }
       }
     });
+  }
 
+  ngOnInit(): void {
+    if(this._commonService.getStorage('dtheme') && (this._commonService.getStorage('dtheme') == '1')){
+      this._commonService.isDarkMode = true;
+      this.switchMode(this._commonService.isDarkMode);
+    }else{
+      this._commonService.isDarkMode = false;
+      this.switchMode(this._commonService.isDarkMode);
+    }
   }
 
 }

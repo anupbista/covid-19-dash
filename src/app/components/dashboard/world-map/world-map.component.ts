@@ -67,7 +67,7 @@ export class WorldMapComponent implements OnInit {
     polygonTemplate.fill = am4core.color("#c7c7c7");
     polygonTemplate.stroke = am4core.color("#c7c7c7");
     
-    this.mapChart.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color("#aadaff");
+    this.mapChart.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color("#cfeaff");
     this.mapChart.backgroundSeries.mapPolygons.template.polygon.fillOpacity = 1;
 
     let imageSeries = this.mapChart.series.push(new am4maps.MapImageSeries());

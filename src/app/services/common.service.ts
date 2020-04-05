@@ -17,4 +17,12 @@ export class CommonService {
 
   constructor() { }
 
+  getStorage(key){
+    return localStorage.getItem(key)
+  }
+
+  setStorage(key, value){
+    localStorage.setItem(key, value);
+  }
+
 }
