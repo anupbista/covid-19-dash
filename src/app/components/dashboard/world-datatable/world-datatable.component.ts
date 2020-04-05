@@ -2,8 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { ApiService } from '../../../services/api.service';
-import getCountryName from '../../../helper/countryname';
-import getCountryISO2 from '../../../helper/countrycode';
 import { CommonService } from '../../../services/common.service';
 import {MatPaginator} from '@angular/material/paginator';
 import getCountryCodeFromName from 'src/app/helper/countrycodename';

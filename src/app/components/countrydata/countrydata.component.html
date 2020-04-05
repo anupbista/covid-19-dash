@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row justify-content-center">
     <div class="app-padding" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="isLoadingCaseCount">
         <app-dataloading></app-dataloading>
     </div>
@@ -10,6 +10,7 @@
             <div class="d-flex justify-content-center align-items-center">
                 <mat-icon>done</mat-icon>
                 <h2>{{ data.cases }}</h2>
+                <p class="no-margin"> (Today: {{ data.todayCases }})</p>
             </div>
             <h3>Confirmed</h3>
         </mat-card>
@@ -37,14 +38,39 @@
             <div class="d-flex justify-content-center align-items-center">
                 <mat-icon>error</mat-icon>
                 <h2>{{ data.deaths }}</h2>
+                <p class="no-margin"> (Today: {{ data.todayDeaths }})</p>
             </div>
             <h3>Deaths</h3>
         </mat-card>
     </div>
-    <div class="row">
-        <div class="app-padding" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="isLoadingCaseCount">
-            <app-dataloading></app-dataloading>
+</div>
+<div class="row">
+    <div class="col-md-6 col-12 section d-flex">
+        <div class="app-card info-card row mat-elevation-z0 d-flex flex-column width-100">
+            <div class="d-flex justify-content-between">
+                <h2 class="no-margin">Cases distribution</h2>
+            </div>
+            <div class="row justify-content-center">
+                <div id="chartdiv" style="height: 400px;overflow: hidden;width: 100%;" [style.height.px]="(errorCaseCount || isLoadingCaseCount) ? '0' : '400'"></div>
+                <div class="app-padding" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="isLoadingCaseCount">
+                    <app-dataloading></app-dataloading>
+                </div>
+                <app-error *ngIf="errorCaseCount && !isLoadingCaseCount"></app-error>
+            </div>
         </div>
-        <app-error *ngIf="errorCaseCount && !isLoadingCaseCount"></app-error>
+    </div>
+    <div class="col-md-6 col-12 section">
+        <div class="app-card info-card row mat-elevation-z0 d-flex d-flex flex-column width-100">
+            <div class="d-flex justify-content-sm-between justify-content-start flex-sm-row flex-column">
+                <h2 class="no-margin">Cases over time</h2>
+            </div>
+            <div class="row justify-content-center">
+                <div id="lineChartDiv" style="height: 400px;overflow: hidden;width: 100%;" [style.height.px]="(errorLineChart || isLoadingLineChart) ? '0' : '400'"></div>
+                <div class="app-padding" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="isLoadingLineChart">
+                    <app-dataloading></app-dataloading>
+                </div>
+                <app-error *ngIf="errorLineChart && !isLoadingLineChart"></app-error>
+            </div>
+        </div>
     </div>
 </div>

@@ -14,6 +14,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 const modules: any[] = [
   FlexLayoutModule,
@@ -30,7 +31,8 @@ const modules: any[] = [
   MatTableModule,
   MatButtonToggleModule,
   MatTooltipModule,
-  ScrollingModule
+  ScrollingModule,
+  MatProgressBarModule
 ];
 
 @NgModule({

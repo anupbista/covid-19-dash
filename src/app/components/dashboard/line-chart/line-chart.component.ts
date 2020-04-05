@@ -5,6 +5,7 @@ import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import { ApiService } from '../../../services/api.service';
 import * as moment from 'moment';
 import { CommonService } from '../../../services/common.service';
+import am4themes_material from "@amcharts/amcharts4/themes/material";
 
 @Component({
 	selector: 'app-line-chart',
@@ -19,6 +20,7 @@ export class LineChartComponent implements OnInit {
 
 	constructor(private _apiService: ApiService, private _commonService: CommonService) {
 		am4core.useTheme(am4themes_animated);
+		am4core.useTheme(am4themes_material);
 	}
 	
 	ngOnInit(): void {

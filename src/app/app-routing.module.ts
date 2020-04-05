@@ -5,7 +5,8 @@ import { CountrydataComponent } from './components/countrydata/countrydata.compo
 import { NotfoundComponent } from './notfound/notfound.component';
 
 const routes: Routes = [
-  {path: 'dashboard', component: DashboardComponent, pathMatch: 'full'},
+  {path: '',  redirectTo:'dashboard', pathMatch: 'full'},
+  {path: 'dashboard', component: DashboardComponent},
   {path: 'dashboard/:countryname', component: CountrydataComponent},
   { path: '**', component:NotfoundComponent }
 ];

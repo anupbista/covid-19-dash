@@ -20,4 +20,11 @@ export class HeaderComponent implements OnInit {
     );
   }
 
+  launchDonate(){
+    window.open(
+      'https://covid19responsefund.org/',
+      '_blank'
+    );
+  }
+
 }

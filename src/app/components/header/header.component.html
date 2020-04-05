@@ -1,17 +1,27 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row class="d-flex justify-content-between">
         <span [routerLink]="['/dashboard']">Covid-19-Dash</span>
-        <button matTooltip="Go to WHO website" (click)="launchWHO()" mat-stroked-button color="accent">WHO</button>
+        <div class="d-flex justify-content-end align-items-center">
+            <button class="mr-3" matTooltip="COVID-19 Solidarity Response Fund for WHO" (click)="launchDonate()" mat-stroked-button color="success">Donate</button>
+            <button matTooltip="Go to WHO website" (click)="launchWHO()" mat-stroked-button color="accent">WHO</button>
+        </div>
     </mat-toolbar-row>
 </mat-toolbar>
-<div class="breadcrumb-toolbar d-flex justify-content-start align-items-center">
+<mat-progress-bar *ngIf="_commonService.routeLoading" color="accent" mode="indeterminate">
+</mat-progress-bar>
+<div class="breadcrumb-toolbar d-flex justify-content-between align-items-center">
+   <div class="d-flex justify-content-start align-items-center">
     <ng-container *ngIf="!_commonService.country">
         <mat-icon>language</mat-icon>
         <p *ngIf="_commonService.lastUpdatedDate">(Last updated: {{ _commonService.lastUpdatedDate }})</p>
     </ng-container>
     <ng-container *ngIf="_commonService.country">
         <img *ngIf="_commonService.countryCode" style="width: 40px;" [src]="'https://www.countryflags.io/'+ _commonService.countryCode +'/flat/64.png'" alt="{{ _commonService.country }}">
-       <p><b>{{ _commonService.country }}</b></p>
+       <p><b class="text-uppercase">{{ _commonService.country }}</b></p>
        <p *ngIf="_commonService.lastUpdatedDate">(Last updated: {{ _commonService.lastUpdatedDate }})</p>
     </ng-container>
+   </div>
+    <button *ngIf="_commonService.country" [routerLink]="['/dashboard']" matTooltip="Go to Dashboard" mat-icon-button aria-label="Dashboard">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
 </div>

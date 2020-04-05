@@ -7,6 +7,7 @@ import { ApiService } from '../../../services/api.service';
 import getCountryName from '../../../helper/countryname';
 import getCountryISO2 from '../../../helper/countrycode';
 import getCountryCodeFromName from '../../../helper/countrycodename';
+import am4themes_material from "@amcharts/amcharts4/themes/material";
 
 @Component({
   selector: 'app-world-map',
@@ -24,6 +25,7 @@ export class WorldMapComponent implements OnInit {
 
   constructor(private _apiService: ApiService, private zone: NgZone,) {
     am4core.useTheme(am4themes_animated);
+    am4core.useTheme(am4themes_material);
   }
 
   ngOnInit(): void {

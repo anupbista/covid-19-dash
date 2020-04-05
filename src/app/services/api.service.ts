@@ -19,12 +19,16 @@ export class ApiService {
     return this._httpService.apiHttpGet(this.CORONASTATISTICS_LIVE, 'countries');
   }
 
+  getLineChartData(){
+    return this._httpService.apiHttpGet(this.CORONASTATISTICS_LIVE, 'timeline/global');
+  }
+
   getSingleCountryData(countryname){
     return this._httpService.apiHttpGet(this.CORONASTATISTICS_LIVE, 'countries/' + countryname);
   }
 
-  getLineChartData(){
-    return this._httpService.apiHttpGet(this.CORONASTATISTICS_LIVE, 'timeline/global');
+  getLineChartPerCountry(countryname){
+    return this._httpService.apiHttpGet(this.CORONASTATISTICS_LIVE, 'timeline/' + countryname);
   }
 
 }

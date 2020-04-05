@@ -5,6 +5,12 @@
        margin-left: 10px;
        text-align: center;
    }
+   p{
+        font-size: 11px;
+        position: relative;
+        top: 2px;
+        left: 10px;
+   }
 }
 .case-count.total{
     background: var(--app-blue);

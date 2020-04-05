@@ -6,11 +6,25 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Sen, "Helvetica Neue", sans-serif;
     background: $app-primary;
 }
+.mat-button.mat-success,
+.mat-stroked-button.mat-success {
+    color: var(--app-green-color);
+}
+.mat-button.mat-success:hover,
+.mat-stroked-button.mat-success:hover {
+  background-color: var(--app-green);
+}
+.light-theme .mat-progress-bar.mat-accent .mat-progress-bar-buffer{
+	background-color: #e2a6c6 !important;
+}	
 .container-fluid{
     padding: 30px;
 }
 .no-margin{
-    margin: 0px;
+    margin: 0px !important;
+}
+.width-100{
+	width: 100% !important;
 }
 .section{
     margin-top: 30px;
