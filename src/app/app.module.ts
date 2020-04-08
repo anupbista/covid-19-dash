@@ -23,6 +23,7 @@ import { DailyUpdatesComponent } from './components/dashboard/daily-updates/dail
 import { WeeklyUpdatesComponent } from './components/dashboard/weekly-updates/weekly-updates.component';
 import { CountrydataComponent } from './components/countrydata/countrydata.component';
 import { NotfoundComponent } from './notfound/notfound.component';
+import { CommonService } from './services/common.service';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,7 @@ import { NotfoundComponent } from './notfound/notfound.component';
     BrowserAnimationsModule
   ],
   entryComponents: [SymptomsComponent, PreventionComponent],
-  providers: [HttpService, ApiService],
+  providers: [HttpService, ApiService, CommonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

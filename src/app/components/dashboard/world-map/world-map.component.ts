@@ -4,10 +4,10 @@ import * as am4maps from "@amcharts/amcharts4/maps";
 import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { ApiService } from '../../../services/api.service';
-import getCountryName from '../../../helper/countryname';
-import getCountryISO2 from '../../../helper/countrycode';
 import getCountryCodeFromName from '../../../helper/countrycodename';
 import am4themes_material from "@amcharts/amcharts4/themes/material";
+import { CommonService } from '../../../services/common.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-world-map',
@@ -22,8 +22,9 @@ export class WorldMapComponent implements OnInit {
   private mapChart: am4maps.MapChart;
   isLoading: boolean = false;
   error: boolean = false;
+  themeChangeSubscription: Subscription;
 
-  constructor(private _apiService: ApiService, private zone: NgZone,) {
+  constructor(private _apiService: ApiService, private zone: NgZone, private _commonService: CommonService) {
     am4core.useTheme(am4themes_animated);
     am4core.useTheme(am4themes_material);
   }
@@ -31,7 +32,11 @@ export class WorldMapComponent implements OnInit {
   ngOnInit(): void {
     this.error = false;
     this.getWorldData();
+    this.themeChangeSubscription = this._commonService.themeChanged.subscribe( change => {
+      this.initWorldMap();
+    })
   }
+
 
   initWorldMap(){
     if (this.mapChart) {
@@ -50,10 +55,8 @@ export class WorldMapComponent implements OnInit {
     this.mapChart.logo.height = -15;
 
     // Set projection
-    this.mapChart.projection = new am4maps.projections.Orthographic();
-    this.mapChart.panBehavior = "rotateLongLat";
-    this.mapChart.padding(20,20,20,20);
-    
+    this.mapChart.projection = new am4maps.projections.Miller();
+
     // Create map polygon series
     let polygonSeries = this.mapChart.series.push(new am4maps.MapPolygonSeries());
     polygonSeries.exclude = ["AQ"];
@@ -64,10 +67,11 @@ export class WorldMapComponent implements OnInit {
 
     let polygonTemplate = polygonSeries.mapPolygons.template;
     polygonTemplate.tooltipText = "{name}";
-    polygonTemplate.fill = am4core.color("#c7c7c7");
-    polygonTemplate.stroke = am4core.color("#c7c7c7");
-    
-    this.mapChart.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color("#cfeaff");
+    // polygonTemplate.fill = am4core.color("#c7c7c7");
+    // polygonTemplate.stroke = am4core.color("#c7c7c7");
+    if(this._commonService.isDarkMode){
+      this.mapChart.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color("#424242");
+    }
     this.mapChart.backgroundSeries.mapPolygons.template.polygon.fillOpacity = 1;
 
     let imageSeries = this.mapChart.series.push(new am4maps.MapImageSeries());
@@ -151,6 +155,7 @@ export class WorldMapComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    this.themeChangeSubscription.unsubscribe();
     this.zone.runOutsideAngular(() => {
       if (this.mapChart) {
         this.mapChart.dispose();

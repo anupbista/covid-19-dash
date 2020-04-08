@@ -15,6 +15,8 @@ export class CommonService {
   countryCode: string = null;
   lastUpdatedDate: string = null;
 
+  themeChanged: Subject<any> = new Subject();
+
   constructor() { }
 
   getStorage(key){

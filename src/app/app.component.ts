@@ -14,6 +14,7 @@ export class AppComponent {
   switchMode(isDarkMode: boolean) {
     const hostClass = isDarkMode ? 'dark-theme' : 'light-theme';
     this.renderer.setAttribute(this.document.body, 'class', 'mat-typography ' + hostClass);
+    this._commonService.themeChanged.next(true);
   }
   constructor(breakpointObserver: BreakpointObserver, private _commonService: CommonService, private router: Router,@Inject(DOCUMENT) private document: Document, private renderer: Renderer2) {
     breakpointObserver.observe([
