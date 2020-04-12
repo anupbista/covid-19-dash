@@ -4,6 +4,14 @@ A dashboard for Covid-19 data visualization using Angular Material. This dashboa
 
 ### [Demo](https://statscovid19.netlify.com/)
 
+### Screenshots
+
+![Global statistics](./src/assets/screenshots/global1_stat.png)
+
+![Global statistics](./src/assets/screenshots/global2_stat.png)
+
+![Country statistics](./src/assets/screenshots/country_stat.png)
+
 ## API used
 
 https://api.coronastatistics.live
