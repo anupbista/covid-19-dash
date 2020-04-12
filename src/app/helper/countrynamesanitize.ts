@@ -1,5 +1,5 @@
 let countries = {
-    "usa": "usa",
+    "usa": "us",
     "taiwan": "taiwan*",
     "isle of man": "united kingdom",
     "aruba": "netherlands",

@@ -52,7 +52,7 @@ export class CountrydataComponent implements OnInit {
 	async initCaseCount() {
 		try {
 			this.isLoadingCaseCount = true;
-			let data = await this._apiService.getSingleCountryData(getCountryNameSanited(this.countryname.toLowerCase()));
+			let data = await this._apiService.getSingleCountryData(this.countryname.toLowerCase());
 			this.data = data.body;
 			this.getPieChartData();
 			this.isLoadingCaseCount = false;
