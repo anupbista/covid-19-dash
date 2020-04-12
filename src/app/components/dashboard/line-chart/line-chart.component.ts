@@ -19,8 +19,9 @@ export class LineChartComponent implements OnInit {
 	error: boolean = false;
 
 	constructor(private _apiService: ApiService, private _commonService: CommonService) {
-		am4core.useTheme(am4themes_animated);
+		// am4core.useTheme(am4themes_animated);
 		am4core.useTheme(am4themes_material);
+		am4core.options.onlyShowOnViewport = true;
 	}
 	
 	ngOnInit(): void {
@@ -70,7 +71,7 @@ export class LineChartComponent implements OnInit {
 			// Create axes
 			let dateAxis = this.lineChart.xAxes.push(new am4charts.DateAxis());
 			dateAxis.renderer.minGridDistance = 50;
-
+			dateAxis.groupData = true;
 			this.createAxisAndSeries('cases', 'Confirmed', false, 'circle');
 			this.createAxisAndSeries('active', 'Active', true, 'triangle');
 			this.createAxisAndSeries('recovered', 'Recovered', true, 'rectangle');

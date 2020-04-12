@@ -32,8 +32,9 @@ export class CountrydataComponent implements OnInit {
 	errorLineChart: boolean = false;
 
 	constructor(private route: ActivatedRoute, private _apiService: ApiService, private _commonService: CommonService) {
-		am4core.useTheme(am4themes_animated);
+		// am4core.useTheme(am4themes_animated);
 		am4core.useTheme(am4themes_material);
+		am4core.options.onlyShowOnViewport = true;
 	}
 
 	ngOnInit(): void {
@@ -191,7 +192,7 @@ export class CountrydataComponent implements OnInit {
 		// Create axes
 		let dateAxis = this.lineChart.xAxes.push(new am4charts.DateAxis());
 		dateAxis.renderer.minGridDistance = 50;
-
+		dateAxis.groupData = true;
 		let valueAxis = this.lineChart.yAxes.push(new am4charts.ValueAxis());
 		valueAxis.renderer.disabled = this._commonService.isSmallDevice;
 		
@@ -227,7 +228,7 @@ export class CountrydataComponent implements OnInit {
 		series.tooltip.pointerOrientation = 'vertical';
 		series.tooltip.background.cornerRadius = 20;
 		series.legendSettings.labelText = name.charAt(0).toUpperCase() + name.slice(1);
-		series.tooltip.background.fillOpacity = 0.5;
+		// series.tooltip.background.fillOpacity = 0.5;
 		series.tooltip.label.padding(12, 12, 12, 12);
 		return series;
 	}

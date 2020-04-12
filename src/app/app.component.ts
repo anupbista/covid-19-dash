@@ -16,7 +16,7 @@ export class AppComponent {
     this.renderer.setAttribute(this.document.body, 'class', 'mat-typography ' + hostClass);
     this._commonService.themeChanged.next(true);
   }
-  constructor(breakpointObserver: BreakpointObserver, private _commonService: CommonService, private router: Router,@Inject(DOCUMENT) private document: Document, private renderer: Renderer2) {
+  constructor(breakpointObserver: BreakpointObserver, public _commonService: CommonService, private router: Router,@Inject(DOCUMENT) private document: Document, private renderer: Renderer2) {
     breakpointObserver.observe([
       Breakpoints.HandsetLandscape,
       Breakpoints.HandsetPortrait
@@ -30,15 +30,15 @@ export class AppComponent {
       switch (true) {
         case event instanceof NavigationStart: {
           this._commonService.routeLoading = true;
-          console.log('true')
           break;
         }
 
         case event instanceof NavigationEnd:
         case event instanceof NavigationCancel:
         case event instanceof NavigationError: {
-          this._commonService.routeLoading = false;
-          console.log('false')
+          setTimeout(() => {
+            this._commonService.routeLoading = false;
+          }, 500);
           break;
         }
         default: {

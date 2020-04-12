@@ -1,3 +1,5 @@
+<mat-progress-bar *ngIf="_commonService.routeLoading" color="accent" mode="indeterminate">
+</mat-progress-bar>
 <app-header (darkModeSwitched)="switchMode($event)"></app-header>
 <div class="container-fluid">
     <router-outlet></router-outlet>

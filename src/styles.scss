@@ -17,6 +17,11 @@ body { margin: 0; font-family: Sen, "Helvetica Neue", sans-serif;
 .light-theme .mat-progress-bar.mat-accent .mat-progress-bar-buffer{
 	background-color: #e2a6c6 !important;
 }	
+.mat-progress-bar{
+	position: fixed !important;
+	left: 0;
+	top: 0;
+}
 .container-fluid{
     padding: 30px;
 }

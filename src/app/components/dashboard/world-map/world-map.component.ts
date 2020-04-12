@@ -20,20 +20,23 @@ export class WorldMapComponent implements OnInit {
 
   mapData = [];
   private mapChart: am4maps.MapChart;
+  private polygonSeries: am4maps.MapPolygonSeries;
+
   isLoading: boolean = false;
   error: boolean = false;
   themeChangeSubscription: Subscription;
 
   constructor(private _apiService: ApiService, private zone: NgZone, private _commonService: CommonService) {
-    am4core.useTheme(am4themes_animated);
+    // am4core.useTheme(am4themes_animated);
     am4core.useTheme(am4themes_material);
+    am4core.options.onlyShowOnViewport = true;
   }
 
   ngOnInit(): void {
     this.error = false;
     this.getWorldData();
     this.themeChangeSubscription = this._commonService.themeChanged.subscribe( change => {
-      this.initWorldMap();
+      this.changeMapTheme();
     })
   }
 
@@ -58,33 +61,32 @@ export class WorldMapComponent implements OnInit {
     this.mapChart.projection = new am4maps.projections.Miller();
 
     // Create map polygon series
-    let polygonSeries = this.mapChart.series.push(new am4maps.MapPolygonSeries());
-    polygonSeries.exclude = ["AQ"];
-    polygonSeries.useGeodata = true;
-    polygonSeries.nonScalingStroke = true;
-    polygonSeries.strokeWidth = 0.5;
-    polygonSeries.calculateVisualCenter = true;
+    this.polygonSeries = this.mapChart.series.push(new am4maps.MapPolygonSeries());
+    this.polygonSeries.exclude = ["AQ"];
+    this.polygonSeries.useGeodata = true;
+    this.polygonSeries.nonScalingStroke = true;
+    this.polygonSeries.strokeWidth = 0.5;
+    this.polygonSeries.calculateVisualCenter = true;
 
-    let polygonTemplate = polygonSeries.mapPolygons.template;
+    let polygonTemplate = this.polygonSeries.mapPolygons.template;
     polygonTemplate.tooltipText = "{name}";
     // polygonTemplate.fill = am4core.color("#c7c7c7");
     // polygonTemplate.stroke = am4core.color("#c7c7c7");
-    if(this._commonService.isDarkMode){
-      this.mapChart.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color("#424242");
-    }
-    this.mapChart.backgroundSeries.mapPolygons.template.polygon.fillOpacity = 1;
-
+   this.mapChart.backgroundSeries.mapPolygons.template.polygon.fillOpacity = 1;
+   if(this._commonService.isDarkMode){
+    this.mapChart.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color("#424242");
+  }
     let imageSeries = this.mapChart.series.push(new am4maps.MapImageSeries());
     imageSeries.data = this.mapData;
-    imageSeries.dataFields.value = "value";
+    imageSeries.dataFields.value = this.worldMapMode == 'confirm' ? 'value' : this.worldMapMode == 'active' ? 'active' :  this.worldMapMode == 'recovered' ? 'recovered' : 'deaths';
     
     let imageTemplate = imageSeries.mapImages.template;
     imageTemplate.nonScaling = true
     
     let circle = imageTemplate.createChild(am4core.Circle);
-    circle.fillOpacity = 0.7;
+    // circle.fillOpacity = 0.7;
     circle.propertyFields.fill = "color";
-    circle.propertyFields.fillOpacity = '0.5';
+    // circle.propertyFields.fillOpacity = '0.5';
     circle.propertyFields.strokeWidth = '0';
     circle.tooltipText = this.worldMapMode == 'confirm' ? `{name}
     Confirmed: [bold]{value}[/]` : this.worldMapMode == 'active' ? `{name}
@@ -106,7 +108,7 @@ export class WorldMapComponent implements OnInit {
     
     imageTemplate.adapter.add("latitude", (latitude, target) => {
       let c:any = target.dataItem.dataContext;
-      let polygon = polygonSeries.getPolygonById(c.id);
+      let polygon = this.polygonSeries.getPolygonById(c.id);
       if(polygon){
         return polygon.visualLatitude;
        }
@@ -115,7 +117,7 @@ export class WorldMapComponent implements OnInit {
     
     imageTemplate.adapter.add("longitude", (longitude, target) => {
       let c:any = target.dataItem.dataContext;
-      let polygon = polygonSeries.getPolygonById(c.id);
+      let polygon = this.polygonSeries.getPolygonById(c.id);
       if(polygon){
         return polygon.visualLongitude;
        }
@@ -151,7 +153,59 @@ export class WorldMapComponent implements OnInit {
 
   toggleView(event){
     this.worldMapMode = event.value;
-    this.initWorldMap();
+    // this.initWorldMap();
+    this.mapData.forEach(element => {
+      element.color = this.worldMapMode == 'confirm' ? '#8888ff' : this.worldMapMode == 'active' ? '#e4f67c' :  this.worldMapMode == 'recovered' ? '#64e87a' : '#e86464';
+    });
+    this.mapChart.series.pop();
+    let imageSeries = this.mapChart.series.push(new am4maps.MapImageSeries());
+    imageSeries.data = this.mapData;
+    imageSeries.dataFields.value = this.worldMapMode == 'confirm' ? 'value' : this.worldMapMode == 'active' ? 'active' :  this.worldMapMode == 'recovered' ? 'recovered' : 'deaths';
+    
+    let imageTemplate = imageSeries.mapImages.template;
+    imageTemplate.nonScaling = true
+    
+    let circle = imageTemplate.createChild(am4core.Circle);
+    // circle.fillOpacity = 0.7;
+    circle.propertyFields.fill = "color";
+    // circle.propertyFields.fillOpacity = '0.5';
+    circle.propertyFields.strokeWidth = '0';
+    circle.tooltipText = this.worldMapMode == 'confirm' ? `{name}
+    Confirmed: [bold]{value}[/]` : this.worldMapMode == 'active' ? `{name}
+    Active: [bold]{active}[/]` :  this.worldMapMode == 'recovered' ? `{name}
+    Recovered: [bold]{recovered}[/]` : `{name}
+    Deaths: [bold]{deaths}[/]`;
+
+    this.mapChart.events.on("ready",()=>{
+      this.isLoading = false;
+    })
+
+    imageSeries.heatRules.push({
+      "target": circle,
+      "property": "radius",
+      "min": 4,
+      "max": 30,
+      "dataField": "value"
+    })
+    imageTemplate.adapter.add("latitude", (latitude, target) => {
+      let c:any = target.dataItem.dataContext;
+      let polygon = this.polygonSeries.getPolygonById(c.id);
+      if(polygon){
+        return polygon.visualLatitude;
+       }
+       return latitude;
+    })
+    
+    imageTemplate.adapter.add("longitude", (longitude, target) => {
+      let c:any = target.dataItem.dataContext;
+      let polygon = this.polygonSeries.getPolygonById(c.id);
+      if(polygon){
+        return polygon.visualLongitude;
+       }
+       return longitude;
+    })
+
+    
   }
 
   ngOnDestroy() {
@@ -161,6 +215,15 @@ export class WorldMapComponent implements OnInit {
         this.mapChart.dispose();
       }
     });
+  }
+
+  changeMapTheme(){
+    if(this._commonService.isDarkMode){
+      this.mapChart.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color("#424242");
+    }
+    else{
+      this.mapChart.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color("#ffffff");
+    }
   }
 
 }
