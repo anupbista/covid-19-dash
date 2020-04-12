@@ -15,6 +15,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 const modules: any[] = [
   FlexLayoutModule,
@@ -32,7 +33,8 @@ const modules: any[] = [
   MatButtonToggleModule,
   MatTooltipModule,
   ScrollingModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatCheckboxModule
 ];
 
 @NgModule({

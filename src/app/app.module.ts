@@ -24,6 +24,7 @@ import { WeeklyUpdatesComponent } from './components/dashboard/weekly-updates/we
 import { CountrydataComponent } from './components/countrydata/countrydata.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { CommonService } from './services/common.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { CommonService } from './services/common.service';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    FormsModule,
     SharedModule,
     MaterialModule,
     BrowserAnimationsModule

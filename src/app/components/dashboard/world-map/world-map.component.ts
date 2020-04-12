@@ -70,12 +70,12 @@ export class WorldMapComponent implements OnInit {
 
     let polygonTemplate = this.polygonSeries.mapPolygons.template;
     polygonTemplate.tooltipText = "{name}";
-    // polygonTemplate.fill = am4core.color("#c7c7c7");
-    // polygonTemplate.stroke = am4core.color("#c7c7c7");
-   this.mapChart.backgroundSeries.mapPolygons.template.polygon.fillOpacity = 1;
-   if(this._commonService.isDarkMode){
-    this.mapChart.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color("#424242");
-  }
+    polygonTemplate.fill = am4core.color("#ffffff");
+    polygonTemplate.stroke = am4core.color("#c7c7c7");
+    this.mapChart.backgroundSeries.mapPolygons.template.polygon.fillOpacity = 1;
+    if(this._commonService.isDarkMode){
+      this.mapChart.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color("#424242");
+    }
     let imageSeries = this.mapChart.series.push(new am4maps.MapImageSeries());
     imageSeries.data = this.mapData;
     imageSeries.dataFields.value = this.worldMapMode == 'confirm' ? 'value' : this.worldMapMode == 'active' ? 'active' :  this.worldMapMode == 'recovered' ? 'recovered' : 'deaths';
@@ -84,7 +84,7 @@ export class WorldMapComponent implements OnInit {
     imageTemplate.nonScaling = true
     
     let circle = imageTemplate.createChild(am4core.Circle);
-    // circle.fillOpacity = 0.7;
+    circle.fillOpacity = 0.7;
     circle.propertyFields.fill = "color";
     // circle.propertyFields.fillOpacity = '0.5';
     circle.propertyFields.strokeWidth = '0';
@@ -166,7 +166,7 @@ export class WorldMapComponent implements OnInit {
     imageTemplate.nonScaling = true
     
     let circle = imageTemplate.createChild(am4core.Circle);
-    // circle.fillOpacity = 0.7;
+    circle.fillOpacity = 0.7;
     circle.propertyFields.fill = "color";
     // circle.propertyFields.fillOpacity = '0.5';
     circle.propertyFields.strokeWidth = '0';

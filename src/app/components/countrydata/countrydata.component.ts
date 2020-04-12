@@ -54,7 +54,11 @@ export class CountrydataComponent implements OnInit {
 			this.isLoadingCaseCount = true;
 			let data = await this._apiService.getSingleCountryData(this.countryname.toLowerCase());
 			this.data = data.body;
-			this.getPieChartData();
+			if(!data.body){
+				this.errorCaseCount = true;
+			}else{
+				this.getPieChartData();
+			}
 			this.isLoadingCaseCount = false;
 		} catch (error) {
 			this.errorCaseCount = true;
@@ -125,6 +129,8 @@ export class CountrydataComponent implements OnInit {
 			this.pieChart.legend = new am4charts.Legend();
 			this.pieChart.legend.itemContainers.template.clickable = false;
 			this.pieChart.legend.itemContainers.template.focusable = false;
+			this.pieChart.legend.fill = am4core.color("#adb5bd");
+			// this.pieChart.legend.labels.template.fill =  am4core.color("#adb5bd");
 			// Add and configure Series
 			let pieSeries = this.pieChart.series.push(new am4charts.PieSeries());
 			pieSeries.dataFields.value = 'value';
@@ -238,16 +244,20 @@ export class CountrydataComponent implements OnInit {
 			this.isLoadingLineChart = true;
 			let res = await this._apiService.getLineChartPerCountry(getCountryNameSanited(this.countryname.toLowerCase()));
 			this.lineChartData = [];
-			res.body.data.timeline.forEach((element) => {
-				this.lineChartData.push({
-					date: new Date(element.date),
-					cases: element.cases,
-					recovered: element.recovered,
-					active: element.cases - element.recovered - element.deaths,
-					deaths: element.deaths
+			if(!res.body){
+				this.errorLineChart = true;
+			}else{
+				res.body.data.timeline.forEach((element) => {
+					this.lineChartData.push({
+						date: new Date(element.date),
+						cases: element.cases,
+						recovered: element.recovered,
+						active: element.cases - element.recovered - element.deaths,
+						deaths: element.deaths
+					});
 				});
-			});
-			this.initLineChart();
+				this.initLineChart();
+			}
 			this.isLoadingLineChart = false;
 		} catch (error) {
 			this.isLoadingLineChart = false;

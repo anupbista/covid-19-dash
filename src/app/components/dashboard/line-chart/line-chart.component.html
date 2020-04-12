@@ -1,8 +1,9 @@
 <mat-card class="mat-elevation-z0 d-flex flex-column justify-content-start">
     <div class="d-flex justify-content-between">
         <h2 class="no-margin">Cases over time</h2>
+        <mat-checkbox (change)='toggleScale($event)' [(ngModel)]="isLogarithmicScale">Logarithmic Scale</mat-checkbox>
     </div>
     <app-dataloading *ngIf="isLoading && !error" class="d-flex align-self-center mt-5"></app-dataloading>
-    <div id="chartdiv" style="width: 100%; height: 330px"></div>
+    <div id="lineChartDiv" style="width: 100%; height: 400px"></div>
 </mat-card>
 <app-error *ngIf="error && !isLoading"></app-error>
